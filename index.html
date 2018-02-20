@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>simple crystal game</title>
+  <!-- Added link to the jQuery Library -->
+  <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+  <!-- Added a link to Bootstrap-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+    crossorigin="anonymous">
+
+  <!-- Our own CSS stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css" media="screen">
+
+</head>
+
+<body>
+
+
+  <div class="jumbotron">
+    <h1 class="text-center">Crystal Collector</h1>
+    <h2></h2>
+    <h3 class="text-center">You will be given a random number at the start of the game. There are four crystals below, </h3>
+    <h3 class="text-center"> By clicking on a crystal you will add a specific amount of points to your total score. </h3>
+    <h3 class="text-center">You will win the game by matching your total score to the compute generated random number.</h3>
+    <h3 class="text-center">Good Luck!</h3>
+  </div>
+
+  <main class="container">
+    <section class="row">
+      <div class="col-md-4">
+        <h4 class="block-header">Generated Random Number</h4>
+        <!-- Here we have div called "randomNumber" where our computer generated random number will go -->
+        <h1 class="text-center" id="randomNumber"></h1>
+      </div>
+      <div class="col-md-4">
+        <h4 class="block-header">Your Total Score is</h4>
+        <!-- Here we have div called "totalScore" where players total score will go -->
+        <h1 class="text-center" id="totalScore"></h1>
+      </div>
+      <div class="col-md-1">
+        <h3 class="">Wins: </h3>
+      </div>
+      <div class="col-md-1">
+        <h3 class="text-center" id="wins"></h3>
+      </div>
+      <div class="col-md-1">
+        <h3 class="">losses: </h3>
+      </div>
+      <div class="col-md-1">
+        <h3 class="text-center" id="losses"></h3>
+      </div>
+    </section>
+
+    <section class="row">
+      <div id="crystal1" class="col-md-3">
+        <img src="https://media.gettyimages.com/photos/sparkling-diamond-picture-id173198232?s=612x612" alt="" class="crystal-image">
+      </div>
+      <div id="crystal2" class="col-md-3">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0ay0NY36q7VNGWlnblrMv83c9010-Y8bSzZ9W7O0Yz3ucke9" alt=""
+          class="crystal-image">
+      </div>
+      <div id="crystal3" class="col-md-3">
+        <img src="http://www.rafichowdhury.com/wp-content/uploads/2017/08/diamond.jpg" alt="" class="crystal-image">
+      </div>
+      <div id="crystal4" class="col-md-3">
+        <img src="http://s4.thingpic.com/images/bo/Dxr6jH5VYAiRDdbzSKZqd7gG.jpeg" alt="" class="crystal-image">
+      </div>
+    </section>
+
+  </main>
+
+
+  <script type="text/javascript">
+
+    $(document).ready(function () {
+
+      var computerRandomNumber = 0;
+      var crystalRandomNumber = 0;
+      var userScore = 0;
+      var crystalOneRandomNumber = 0;
+      var crystalTwoRandomNumber = 0;
+      var crystalThreeRandomNumber = 0;
+      var crystalFourRandomNumber = 0;
+      var userWin = 0;
+      var userLose = 0;
+
+
+
+      function blinker() {
+        $('.blink_me').fadeOut(500);
+        $('.blink_me').fadeIn(500);
+      }
+      setInterval(blinker, 1000);
+
+
+      // this function generate random number between min - max numbers
+      function randomIntFromInterval(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+      }
+
+      // this function generate random number between 1 to 12 for Crystal One 
+      function createCrystalsRandomNumbers() {
+        crystalOneRandomNumber = randomIntFromInterval(1, 12);
+        console.log(crystalOneRandomNumber);
+        // this function generate random number between 1 to 12 for Crystal Two 
+        crystalTwoRandomNumber = randomIntFromInterval(1, 12);
+        console.log(crystalTwoRandomNumber);
+        // this function generate random number between 1 to 12 for Crystal Three 
+        crystalThreeRandomNumber = randomIntFromInterval(1, 12);
+        console.log(crystalThreeRandomNumber);
+        // this function generate random number between 1 to 12 for Crystal Four 
+        crystalFourRandomNumber = randomIntFromInterval(1, 12);
+        console.log(crystalFourRandomNumber);
+      }
+
+      // this function to initialize the values and reset the app
+      function initializeThis() {
+        computerRandomNumber = 0;
+        crystalRandomNumber = 0;
+        userScore = 0;
+        crystalOneRandomNumber = 0;
+        crystalTwoRandomNumber = 0;
+        crystalThreeRandomNumber = 0;
+        crystalFourRandomNumber = 0;
+        
+
+
+        $("#randomNumber, #totalScore").empty();
+
+        // Generate the Computer random number
+        computerRandomNumber = randomIntFromInterval(19, 120);
+        // Generate the random numbers for each crystal
+        createCrystalsRandomNumbers();
+
+        console.log("Computer Random number is = " + computerRandomNumber);
+        $("#randomNumber").text(computerRandomNumber);
+
+      }
+
+      function checkScore() {
+
+        if (userScore === computerRandomNumber) {
+          userWin++;
+          $("#wins").text(userWin);
+
+          $("h2:first").replaceWith("<h2 class=\"text-center, blink_me\">You Won!</h2>").delay(3000);
+          initializeThis();
+        }
+        else if (userScore > computerRandomNumber) {
+          userLose++;
+          $("#losses").text(userLose);
+          $("h2:first").replaceWith("<h2 class=\"text-center, blink_me\">You Lost!</h2>").delay(3000);
+
+          initializeThis();
+        }
+      }
+
+      initializeThis();
+
+      // Add an on click listener to Crystals
+      $("#crystal1").on("click", function () {
+        $("h2:first").replaceWith("<h2></h2>");
+        userScore = userScore + crystalOneRandomNumber;
+        console.log(userScore);
+        $("#totalScore").text(userScore);
+        checkScore();
+      });
+
+      $("#crystal2").on("click", function () {
+        $("h2:first").replaceWith("<h2></h2>");
+        userScore = userScore + crystalTwoRandomNumber;
+        console.log(userScore);
+        $("#totalScore").text(userScore);
+        checkScore();
+      });
+
+      $("#crystal3").on("click", function () {
+        $("h2:first").replaceWith("<h2></h2>");
+        userScore = userScore + crystalThreeRandomNumber;
+        console.log(userScore);
+        $("#totalScore").text(userScore);
+        checkScore();
+      });
+
+      $("#crystal4").on("click", function () {
+        $("h2:first").replaceWith("<h2></h2>");
+        userScore = userScore + crystalFourRandomNumber;
+        console.log(userScore);
+        $("#totalScore").text(userScore);
+        checkScore();
+      });
+
+    });
+
+
+
+  </script>
+
+
+</body>
+
+</html>

@@ -13,10 +13,40 @@ body {
   }
 
   h2 {
-    position: center;
     color:red;
     font-size: 70px;
     text-align: center;
+  }
+
+  h4 {
+    font-weight: bold;
+    color: black;
+    text-align: left;
+  }
+
+  #totalScore {
+    font-weight: bold;
+    color: black;
+    text-align: left;
+    width: 300px;
+  }
+
+  #randomNumber{
+    font-weight: bold;
+    color: red;
+    text-align: left;
+    font-size: 50px;
+    width: 300px;
+  }
+
+  #wins{
+    font-weight: bold;
+    color: black;
+  }
+
+  #losses{
+    font-weight: bold;
+    color: black;
   }
   
   /* add space for fixed nav */
